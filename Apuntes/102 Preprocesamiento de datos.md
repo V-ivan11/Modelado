@@ -21,6 +21,8 @@ Este método nos sirve para transformar los datos haciendo que su distribución 
 $$
 \mathbb E \left(\left(\frac{x-\mu_x}{\sigma_x}\right)^3 \right)
 $$
+La regla general es considerar si el skewness está dentro de [-2, 2], los datos tienen buena simetría.
+
 Usando la raíz cuadrada, el logaritmo o su inversa también puede ayudar a mejorar la simetría.
 
 ## Transformación para múltiples características
@@ -37,11 +39,11 @@ Dado que este método trata de medir la distancia cuadrada al centro de la esfer
 
 Estos métodos reducen los datos para generar pequeños conjuntos de características que resuman la gran mayoría de la información de nuestras variables originales.
 
-### Análisis de Componentes Principales
+#### Análisis de Componentes Principales
 
 Con el objetivo el reducir las dimensiones teniendo la mayor varianza posible.
 
-Consideremos una matrz de datos $N \times d$ con media cero.
+Consideremos una matriz de datos $N \times d$ con media cero.
 $$
 \begin{bmatrix}
 \cdots & x_{(1)}& \cdots\\
@@ -91,8 +93,6 @@ En varios casos, algunas características no tienen valores, por lo que es impor
 
 El valor exacto falta pero si se sabe algo del dato, por ejemplo en medidas de laboratorios clínicos.
 
-
-
 En conjuntos grandes de datos, eliminar los datos faltantes no es un problema, asumiendo de que esta falta no es informativa, sin embargo, en conjuntos de datos pequeños puede significar una pérdida significante de información, por lo que se van a describir métodos para tratar este problema.
 
 - Primero, algunos modelos predictivos puedes ayudarnos a llenar los datos faltantes
@@ -104,5 +104,13 @@ En conjuntos grandes de datos, eliminar los datos faltantes no es un problema, a
 Existen ventajas potenciales al eliminar características antes del modelado.
 
 1. Pocas características significan decremento de complejidad computacional y temporal.
-2. Si 2 características están altamente correlacionadas, esto implica que ambas medidas tienen casi la misma infomación.
+2. Si 2 características están altamente correlacionadas, esto implica que ambas medidas tienen casi la misma información.
+
+Un algoritmo para eliminar características, está dado por:
+
+1. Calcular la matriz de correlación
+2. Determinar las 2 características con mayor correlación absoluta dado un límite definido, llamando $A$ y $B$ estas características
+3. Calcular el promedio de correlación entre $A$ y $B$ con las otras variables
+4. Eliminar la característica con mayor promedio de correlación
+5. Repetir desde el paso 2 hasta que se haya llegado al límite definido de la correlación
 

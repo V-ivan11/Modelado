@@ -12,9 +12,9 @@ Función desconocida, Ejemplos de entrenamiento, algoritmo de aprendizaje, hipó
 
 ### Un modelo simple de aprendizaje
 
-Dado un problema de aprendizaje específico, la función objetivo y un conjunto de entrenamiento están dichos por el problema. Sin embargo, el algoritmo de aprendizaje y el conjunto de hipótesis no lo dan. Estas herramientas de solución son las que debemos de escoger. El conjunto de hipótesis.
+Dado un problema de aprendizaje específico, la función objetivo y un conjunto de entrenamiento están dichos por el problema. Sin embargo, el algoritmo de aprendizaje y el conjunto de hipótesis no lo dan. Estas son herramientas de solución que debemos de escoger. El conjunto de hipótesis y el algoritmo de aprendizaje son referidos informalmente como el modelo de aprendizaje.
 
-La función objetivo $h(x)\in N$ que escogemos diferentes pesos a las diferentes coordenadas de $x$, devolviendo su relativa importancia hacia la decisión.
+La función objetivo $h(x)\in H$ que escogemos diferentes pesos a las diferentes coordenadas de $x$, devolviendo su relativa importancia hacia la decisión.
 
 ## Perceptrón PLA
 
@@ -22,7 +22,7 @@ $$
 h(x)=sign\left(\left(\sum_{i=1}^dw_ix_i\right)+b\right)=sign(w^Tx)
 $$
 
-Este modelo de $H$ es llamado perceptrón, un nombre que tiene contexto en inteligencia artificial. Las decisiones optimas de los pesos y el bias defina a hipótesis final $g\in H$ que el algoritmo produce.
+Este modelo de $H$ es llamado perceptrón, un nombre que tiene contexto en inteligencia artificial. Las decisiones optimas de los pesos y el bias son definidas en la hipótesis final $g\in H$ que el algoritmo produce.
 
 ![image-20230221090848421](/home/ivn/snap/typora/76/.config/Typora/typora-user-images/image-20230221090848421.png)
 
@@ -77,3 +77,30 @@ P[|v-\mu| > \epsilon] \le2e^{-2\epsilon^2N}
 $$
 
 Conforme $N$ se haga más grande, se hará más pequeño, por lo que es mejor tomar más muestras si se quiere tener mayor precisión.
+
+Consideremos el error de la muestra:
+$$
+E_{in}=\frac 1 N \sum_{n=1}^N[h(x_n)\ne f(x_n)]
+$$
+Y el error fuera de la muestra como:
+$$
+E_{out}(h)=P[h(x_n)\ne f(x_n)]
+$$
+Aplicando la desigualdad:
+$$
+P[|v-\mu|> \epsilon] = P[|E_{in}-E_{out}|<\epsilon] \le 2e^{-2\epsilon^2N}
+$$
+Sin embargo, no tenemos control de $E_{in}$, ya que está basada en una hipótesis particular $h$. En un verdadero aprendizaje, nosotros exploramos el conjunto de hipótesis $H$ completo, buscando un $h\in H$ que tanga el menor error.
+
+Consideremos un conjunto de hipótesis finito $H$ de lugar de sólo una hipótesis $h$.
+$$
+H=\{h_1, h_2, \cdots, h_M\}
+$$
+Con múltiples hipótesis en $H$, el algoritmo de aprendizaje toma la hipótesis final $g$ de acuerdo en $D$. Dado $g$ tiene que estar en $H$, entonces:
+$$
+\begin{eqnarray}
+P[|E_{in}(g)-E_{out}(g)|<\epsilon] &\le& P[|E_{in}(h_1)-E_{out}(h_1)|<\epsilon]\\
+&>& \epsilon \text{ or } P[|E_{in}(h_2)-E_{out}(h_2)| < \epsilon] \cdots\\
+&\le& 2 Me^{-2\epsilon^2N}
+\end{eqnarray}
+$$
